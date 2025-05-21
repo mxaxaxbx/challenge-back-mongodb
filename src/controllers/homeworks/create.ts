@@ -30,7 +30,7 @@ export const createHomework = async (req: Request, res: Response) => {
       course: req.body.course,
       student: user.id,
       teacher: null,
-      rating: 0.0,
+      score: 0.0,
     });
 
     await hw.save();
