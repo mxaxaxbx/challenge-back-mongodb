@@ -1,9 +1,11 @@
 import express from 'express';
 
-import { register } from '../controllers/auth.controller';
+import { registerTeacher } from '../controllers/auth/registerdoctor';
+import { login } from '../controllers/auth/login';
 
 const router = express.Router();
 
-router.post('/register', register);
+router.post('/registerteacher', registerTeacher);
+router.post('/login', login);
 
 export { router as authRoutes };
