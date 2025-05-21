@@ -21,6 +21,8 @@
     "firebase-admin": "^10.0.0",
     "jszip": "^3.7.1",
     "like-mysql": "^1.2.2",
+    "mongodb": "6.16",
+    "mongoose": "^8.15.0",
     "typescript": "^4.3.5",
     "xlsx": "^0.17.1"
   },
