@@ -1,15 +1,17 @@
 import { Request, Response } from 'express';
+import mongoose from "mongoose";
 
 import { Class } from "../../models/class";
 
 export const classSummary = async (req: Request, res: Response) => {
   const classId = req.params.id;
-  console.log('classId', classId);
 
   const classWithDetails = await Class.aggregate([
-    { $match: { _id: classId } },
-
-    // Poblamos profesores
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(classId),
+      }
+    },
     {
       $lookup: {
         from: "users",
@@ -18,8 +20,6 @@ export const classSummary = async (req: Request, res: Response) => {
         as: "teacherDetails",
       },
     },
-
-    // Poblamos estudiantes
     {
       $lookup: {
         from: "users",
@@ -28,8 +28,6 @@ export const classSummary = async (req: Request, res: Response) => {
         as: "studentDetails",
       },
     },
-
-    // Traemos tareas de los estudiantes en esta clase
     {
       $lookup: {
         from: "homeworks",
@@ -47,8 +45,6 @@ export const classSummary = async (req: Request, res: Response) => {
         as: "studentStats",
       },
     },
-
-    // Combinamos los detalles de estudiantes con sus estadísticas
     {
       $addFields: {
         students: {
@@ -85,8 +81,6 @@ export const classSummary = async (req: Request, res: Response) => {
         },
       },
     },
-
-    // Calculamos leaderboard (top estudiantes por promedio de nota)
     {
       $addFields: {
         leaderboard: {
@@ -102,8 +96,6 @@ export const classSummary = async (req: Request, res: Response) => {
         },
       },
     },
-
-    // Seleccionamos los campos finales
     {
       $project: {
         name: 1,
@@ -115,9 +107,7 @@ export const classSummary = async (req: Request, res: Response) => {
     },
   ]);
 
-  console.log('classWithDetails', classWithDetails);
-
   res.status(200);
-  res.json('classWithDetails');
+  res.json(classWithDetails);
 };
 
