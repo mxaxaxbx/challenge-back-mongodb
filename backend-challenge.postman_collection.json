@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "a3d23d25-0e1f-4677-8e61-24b501bc5ce6",
+		"name": "backend-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16708812"
+	},
+	"item": [
+		{
+			"name": "classes",
+			"item": [
+				{
+					"name": "/api/classes/listclasses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}:8080/api/classes/listclasses",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"classes",
+								"listclasses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/classes/getclass/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}:8080/api/classes/getclass/682e43ded64ed63533ed75e1",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"classes",
+								"getclass",
+								"682e43ded64ed63533ed75e1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/classes/enrolluser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"course_id\": \"682e43ded64ed63533ed75e1\",\n    \"user_id\": \"682e40f78e0428714a962380\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}:8080/api/classes/enrolluser",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"classes",
+								"enrolluser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/classes/summary/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://challenge-backend-290571698035.us-east1.run.app/api/classes/summary/682f61d3225de7f2cc4e48ca",
+							"protocol": "https",
+							"host": [
+								"challenge-backend-290571698035",
+								"us-east1",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"classes",
+								"summary",
+								"682f61d3225de7f2cc4e48ca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/classes/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"maths\",\n    \"description\": \"maths first level\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}:8080/api/classes/create",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"classes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/api/auth/login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"mxaxaxbx@gmail.com\",\n    \"password\": \"P455W0rd!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}:8080/api/auth/login",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/auth/registerstudent",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Miguel Arenas\",\n    \"email\": \"mxaxaxbx@outlook.com\",\n    \"password\": \"P455W0RD123*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/api/auth/registerstudent",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"registerstudent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/auth/registerteacher",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Miguel Arenas\",\n    \"email\": \"mxaxaxbx@gmail123.com\",\n    \"password\": \"P455W0RD123*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}:8080/api/auth/registerteacher",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"registerteacher"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "teachers",
+			"item": [
+				{
+					"name": "/api/teachers/listusers?role=:rolename",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}:8080/api/teachers/listusers?role=student",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"teachers",
+								"listusers"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "student"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "homeworks",
+			"item": [
+				{
+					"name": "/api/homeworks/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"class\": \"682e43ded64ed63533ed75e1\",\n    \"content\": \"2+2=4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}:8080/api/homeworks/create",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"homeworks",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/homeworks/listbyclass/:course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}:8080/api/homeworks/listbyclass/682e43ded64ed63533ed75e1",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"homeworks",
+								"listbyclass",
+								"682e43ded64ed63533ed75e1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/homeworks/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}:8080/api/homeworks/682e6b2cc170f3fcaa7a2ead",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"homeworks",
+								"682e6b2cc170f3fcaa7a2ead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/homeworks/qualify",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"homework\": \"682e6b2cc170f3fcaa7a2ead\",\n    \"score\": 8.5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}:8080/api/homeworks/qualify",
+							"host": [
+								"{{local}}"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"homeworks",
+								"qualify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
