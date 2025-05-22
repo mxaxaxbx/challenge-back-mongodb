@@ -24,6 +24,7 @@ export const registerStudent = async (req: Request, res: Response) => {
       email: req.body.email,
       password: hash,
       role: 'student',
+      cohort: 'Maths level one',
     });
 
     await user.save();

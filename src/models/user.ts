@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
     enum: ["teacher", "student"],
     default: "student",
   },
+  cohort: {
+    type: String,
+  },
 });
 
 export const User = mongoose.model("User", userSchema);
