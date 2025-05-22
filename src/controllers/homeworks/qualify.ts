@@ -19,12 +19,16 @@ export const qualify = async (req: Request, res: Response) => {
       return res.status(403).json({ message: 'Only teachers can qualify homeworks' });
     }
 
-    const c = await Class.findById(hw.course);
+    const c = await Class.findById(hw.class);
 
     // check if teacher is in the course
     const teacherInCourse = c.teachers.includes(user.id);
     if (!teacherInCourse) {
       return res.status(403).json({ message: 'You are not in this course' });
+    }
+
+    if (hw.score > 0) {
+      return res.status(400).json({ message: 'Homework already qualified' });
     }
 
     hw.score = req.body.score;

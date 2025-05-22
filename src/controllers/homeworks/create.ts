@@ -5,11 +5,11 @@ import { Class } from '../../models/class';
 
 export const createHomework = async (req: Request, res: Response) => {
   try {
-    if (!req.body.content || !req.body.course) {
+    if (!req.body.content || !req.body.class) {
       return res.status(400).json({ message: 'Course and content are required' });
     }
 
-    const c = await Class.findById(req.body.course);
+    const c = await Class.findById(req.body.class);
     if (!c) {
       return res.status(404).json({ message: 'Course not found' });
     }
@@ -20,14 +20,14 @@ export const createHomework = async (req: Request, res: Response) => {
     }
 
     // check if student is in the course
-    const studentInCourse = c.students.includes(user.id);
-    if (!studentInCourse) {
+    const studentInClass = c.students.includes(user.id);
+    if (!studentInClass) {
       return res.status(403).json({ message: 'You are not in this course' });
     }
 
     const hw = new Homework({
       content: req.body.content,
-      course: req.body.course,
+      class: req.body.class,
       student: user.id,
       teacher: null,
       score: 0.0,
