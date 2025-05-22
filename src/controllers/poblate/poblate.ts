@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { faker } from '@faker-js/faker';
 
 import { User } from '../../models/user';
 import { Class } from '../../models/class';
@@ -14,13 +13,74 @@ async function clearDatabase() {
   console.log('Database cleared');
 }
 
+function makeid(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+function generateRandomPassword() {
+  return makeid(12); // strong 12-character password
+}
+
+function generateRandomName() {
+  const firstNames = ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve', 'Frank'];
+  const lastNames = ['Smith', 'Johnson', 'Brown', 'Williams', 'Jones', 'Miller'];
+  const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+  return `${firstName} ${lastName}`;
+}
+
+function generateRandomEmail() {
+  const username = makeid(8).toLowerCase();
+  const domains = ['example.com', 'testmail.com', 'mydomain.org'];
+  const domain = domains[Math.floor(Math.random() * domains.length)];
+  return `${username}@${domain}`;
+}
+
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function selectRandomElements(array, numElements) {
+  const shuffledArray = array.slice();
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray.slice(0, numElements);
+}
+
+function generateLoremIpsum(wordCount) {
+  const loremWords = [
+    "lorem", "ipsum", "dolor", "sit", "amet", "consectetur",
+    "adipiscing", "elit", "sed", "do", "eiusmod", "tempor",
+    "incididunt", "ut", "labore", "et", "dolore", "magna", "aliqua",
+    "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
+    "exercitation", "ullamco", "laboris", "nisi", "ut", "aliquip",
+    "ex", "ea", "commodo", "consequat"
+  ];
+
+  let result = [];
+  for (let i = 0; i < wordCount; i++) {
+    const word = loremWords[Math.floor(Math.random() * loremWords.length)];
+    result.push(word);
+  }
+  return result.join(" ") + ".";
+}
+
 async function createUsers() {
   const teachers = [];
   const students = [];
 
   for (let i = 0; i < 5; i++) {
-    const email = faker.internet.email();
-    const password = faker.internet.password();
+    const email = generateRandomEmail();
+    const password = generateRandomPassword();
 
     console.log(`${i} teacher email ${email} password ${password}`);
 
@@ -28,7 +88,7 @@ async function createUsers() {
 
     teachers.push(
       new User({
-        name: faker.person.fullName(),
+        name: 
         email,
         password: hashPassword,
         role: 'teacher',
@@ -37,8 +97,8 @@ async function createUsers() {
   }
 
   for (let i = 0; i < 30; i++) {
-    const email = faker.internet.email();
-    const password = faker.internet.password();
+    const email = generateRandomEmail();
+    const password = generateRandomPassword();
 
     console.log(`${i} student email ${email} password ${password}`);
 
@@ -46,11 +106,11 @@ async function createUsers() {
 
     students.push(
       new User({
-        name: faker.person.fullName(),
+        name: generateRandomName(),
         email,
         password: hashPassword,
         role: 'student',
-        cohort: `20${faker.number.int({ min: 22, max: 25 })}-${faker.number.int({ min: 1, max: 2 })}`,
+        cohort: `20${generateRandomNumber(22, 25)}-${generateRandomNumber(1, 2)}`,
       }),
     );
   }
@@ -84,7 +144,7 @@ async function createUsers() {
       email: studentEmail,
       password: hashStudentPassword,
       role: 'student',
-      cohort: `20${faker.number.int({ min: 22, max: 25 })}-${faker.number.int({ min: 1, max: 2 })}`,
+      cohort: `20${generateRandomNumber(22, 25)}-${generateRandomNumber(1, 2)}`,
     })
   );
 
@@ -97,12 +157,12 @@ async function createClasses(teachers: any[], students: any[]) {
   const classes = [];
 
   for (let i = 0; i < 3; i++) {
-    const classTeachers = (faker.helpers as any).arrayElements(teachers, 2);
-    const classStudents = (faker.helpers as any).arrayElements(students, 10);
+    const classTeachers = selectRandomElements(teachers, 2);
+    const classStudents = selectRandomElements(students, 10);
 
     const newClass = new Class({
       name: `Class ${i + 1}`,
-      description: faker.lorem.sentence(),
+      description: generateLoremIpsum(10),
       teachers: classTeachers.map(t => t._id),
       students: classStudents.map(s => s._id),
     });
@@ -118,14 +178,14 @@ async function createClasses(teachers: any[], students: any[]) {
 async function createHomeworks(classesWithMembers: any[]) {
   for (const { class: classDoc, students, teachers } of classesWithMembers) {
     for (const student of students) {
-      const numTasks = faker.number.int({ min: 2, max: 6 });
+      const numTasks = generateRandomNumber(2, 6);
       for (let i = 0; i < numTasks; i++) {
         await new Homework({
-          content: faker.lorem.sentence(),
+          content: generateLoremIpsum(10),
           class: classDoc._id,
           student: student._id,
-          teacher: (faker.helpers as any).arrayElement(teachers)._id,
-          score: parseFloat(faker.number.float({ min: 2.0, max: 5.0 }).toFixed(1)),
+          teacher: selectRandomElements(teachers, 1)[0]._id,
+          score: parseFloat(generateRandomNumber(2.0, 5.0).toFixed(1)),
         }).save();
       }
     }
